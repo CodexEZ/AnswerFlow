@@ -11,7 +11,7 @@ client = genai.Client(api_key=API_KEY)
 if uploaded_file is not None:
     st.success("File uploaded successfully")
     file_bytes = uploaded_file.read()
-    with st.spinner('Extracting Questions . . .',show_time = False):
+    with st.spinner('Extracting Questions . . .',show_time = True):
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents = [
@@ -27,7 +27,7 @@ if uploaded_file is not None:
     output_area = st.empty()  # Placeholder for updating the markdown
     print(questions.__len__())
     answer = ''
-    with st.spinner('Generating answers ✍️ . . .', show_time = False):
+    with st.spinner('Generating answers ✍️ . . .', show_time = True):
         for num, question in enumerate(questions):
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
