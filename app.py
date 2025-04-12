@@ -40,7 +40,7 @@ st.markdown("---")
 uploaded_file = st.file_uploader("📄 Upload a PDF File", type=["pdf"])
 
 # Set your API key securely
-API_KEY = 'AIzaSyAWhhnyIIgexCtL7YYDaXsn-MZ4qkG6Wig'#st.secrets['API_KEY']
+API_KEY = st.secrets['API_KEY']
 client = genai.Client(api_key=API_KEY)
 
 if uploaded_file is not None:
