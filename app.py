@@ -55,14 +55,13 @@ if uploaded_file is not None:
                     data=file_bytes,
                     mime_type="application/pdf",
                 ),
-                "Extract all the questions from the PDF and write down each question separated by newline, just give the questions do not write anything else other than that"
+                "Extract all the questions from the PDF and write down each question separated by newline, just give the questions do not write anything else other than that. Make sure the questions are separated perfectly such that no questions are split in two by accident"
             ]
         )
 
     questions = response.text.strip().split('\n')
     output_area = st.empty()
     answer = ''
-
     with st.spinner('✍️ Generating Answers...'):
         for num, question in enumerate(questions):
             response = client.models.generate_content(
@@ -87,3 +86,4 @@ if uploaded_file is not None:
         file_name="answers.md",
         mime="text/markdown"
     )
+    uploaded_file = None
