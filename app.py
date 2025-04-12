@@ -2,6 +2,8 @@ import streamlit as st
 from google import genai
 from google.genai import types
 import time
+import markdown2
+from weasyprint import HTML
 st.markdown("# Answer Flow")
 
 uploaded_file = st.file_uploader("Upload a PDF File", type = ["pdf"])
@@ -42,4 +44,12 @@ if uploaded_file is not None:
 
             output_area.markdown(answer)
             time.sleep(2)
-        
+    html_content = markdown2.markdown(answer)
+
+    # Convert the HTML content to a PDF using WeasyPrint
+    pdf_output = "/tmp/generated_answers.pdf"
+    HTML(string=html_content).write_pdf(pdf_output)
+
+    # Provide the PDF for download
+    with open(pdf_output, "rb") as f:
+        st.download_button("Download Answers as PDF", data=f, file_name="answers.pdf", mime="application/pdf")
