@@ -35,7 +35,12 @@ with st.sidebar:
 st.markdown("<h1 style='text-align: center; color: #4F8BF9;'>📘 Answer Flow</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Let AI extract & answer questions from your PDFs</h4>", unsafe_allow_html=True)
 st.markdown("---")
-
+answer_length = st.radio(
+    "📝 Select answer length:",
+    ["Short", "Long"],
+    index=0,
+    horizontal=True
+)
 # Upload section
 uploaded_file = st.file_uploader("📄 Upload a PDF File", type=["pdf"])
 
@@ -47,7 +52,7 @@ if uploaded_file is not None:
     st.success("✅ File uploaded successfully")
     file_bytes = uploaded_file.read()
 
-    with st.spinner('🔍 Extracting Questions...'):
+    with st.spinner('🔍 Extracting Questions...', show_time = True):
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents=[
@@ -67,7 +72,13 @@ if uploaded_file is not None:
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 config=types.GenerateContentConfig(
-                    system_instruction='You are a helpful AI Tutor who has expertise in Natural Language Processing. Give answers to the questions and keep it relatively short and meaningful such that after reading it one can expand upon it.'
+                    system_instruction = (
+                        "You are a helpful AI Tutor with expertise in Natural Language Processing. "
+                        "Give answers to the questions in a clear, concise way, suitable for quick understanding."
+                        if answer_length == "Short" else
+                        "You are a helpful AI Tutor with expertise in Natural Language Processing. "
+                        "Give in-depth, detailed answers to the questions, elaborating on important concepts and examples where necessary."
+                    )
                 ),
                 contents=[f"{question}"]
             )
@@ -77,7 +88,7 @@ if uploaded_file is not None:
             answer += '---\n'
 
             output_area.markdown(answer, unsafe_allow_html=True)
-            time.sleep(1.5)
+            time.sleep(2)
 
     st.markdown("### 📥 Download the complete answer set:")
     st.download_button(
