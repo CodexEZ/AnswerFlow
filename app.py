@@ -11,7 +11,7 @@ client = genai.Client(api_key=API_KEY)
 if uploaded_file is not None:
     st.success("File uploaded successfully")
     file_bytes = uploaded_file.read()
-    with st.spinner('Extracting Questions . . .',show_time = False)
+    with st.spinner('Extracting Questions . . .',show_time = False):
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents = [
