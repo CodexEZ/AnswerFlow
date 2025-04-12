@@ -44,6 +44,84 @@ answer_length = st.radio(
     horizontal=True
 )
 # Upload section
+
+education_fields = [
+    "Computer Science / IT",
+    "Data Science / AI / Machine Learning",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Environmental Science",
+    "Statistics",
+    "Engineering (General)",
+    "Mechanical Engineering",
+    "Electrical Engineering",
+    "Civil Engineering",
+    "Electronics & Communication",
+    "Aerospace Engineering",
+    "Chemical Engineering",
+    "Architecture",
+    "Business Administration (BBA/MBA)",
+    "Marketing",
+    "Finance",
+    "Accounting",
+    "Human Resource Management",
+    "Operations & Supply Chain",
+    "Entrepreneurship",
+    "International Business",
+    "Economics",
+    "History",
+    "Political Science",
+    "Sociology",
+    "Psychology",
+    "Philosophy",
+    "Anthropology",
+    "Linguistics",
+    "Literature",
+    "Education",
+    "Gender Studies",
+    "Religious Studies",
+    "Journalism / Mass Communication",
+    "Constitutional Law",
+    "International Law",
+    "Corporate Law",
+    "Criminology",
+    "Public Administration",
+    "Public Policy",
+    "Medicine (MBBS/MD)",
+    "Nursing",
+    "Pharmacy",
+    "Dentistry",
+    "Public Health",
+    "Nutrition & Dietetics",
+    "Biotechnology",
+    "Physiotherapy",
+    "Fine Arts",
+    "Performing Arts (Dance, Music, Theatre)",
+    "Graphic Design",
+    "Animation",
+    "Fashion Design",
+    "Interior Design",
+    "English",
+    "French",
+    "Spanish",
+    "German",
+    "Japanese",
+    "Chinese",
+    "Regional Languages",
+    "Comparative Literature",
+    "Artificial Intelligence",
+    "Cybersecurity",
+    "Game Design & Development",
+    "Digital Marketing",
+    "Ethical Hacking",
+    "UX/UI Design",
+    "Philosophy of Science",
+    "Cognitive Science"
+]
+
+selected_field = st.selectbox("🎓 Choose your education field:", education_fields)
 uploaded_file = st.file_uploader("📄 Upload a PDF File", type=["pdf"])
 
 # Set your API key securely
@@ -75,10 +153,10 @@ if uploaded_file is not None:
                 model="gemini-2.0-flash",
                 config=types.GenerateContentConfig(
                     system_instruction = (
-                        "You are a helpful AI Tutor with expertise in Natural Language Processing. "
+                        f"You are a helpful AI Tutor with expertise in {selected_field}. "
                         "Give answers to the questions in a clear, concise way, suitable for quick understanding."
                         if answer_length == "Short" else
-                        "You are a helpful AI Tutor with expertise in Natural Language Processing. "
+                        f"You are a helpful AI Tutor with expertise in {selected_field}. "
                         "Give in-depth, detailed answers to the questions, elaborating on important concepts and examples where necessary."
                     )
                 ),
