@@ -38,8 +38,8 @@ if uploaded_file is not None:
                 ),
                 contents=[f"{question}"]
             )
-            answer += f'## {question}\n'
-            answer += f'A{num+1}. {response.text}\n'
+            answer += f'## Q{num+1} . {question}\n'
+            answer += f'{response.text}\n'
             answer += '---\n'
 
             output_area.markdown(answer)
