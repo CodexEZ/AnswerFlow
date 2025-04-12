@@ -86,7 +86,7 @@ if uploaded_file is not None:
             )
 
             answer += f'## ❓ Q{num+1}: {question}\n'
-            answer += f'🧠 **Answer**:\n{response.text}\n'
+            answer += f'🧠 **Answer**:\n\n{response.text}\n'
             answer += '---\n'
 
             output_area.markdown(answer, unsafe_allow_html=True)
