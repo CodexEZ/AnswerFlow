@@ -11,23 +11,23 @@ client = genai.Client(api_key=API_KEY)
 if uploaded_file is not None:
     st.success("File uploaded successfully")
     file_bytes = uploaded_file.read()
-
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents = [
-            types.Part.from_bytes(
-                data = file_bytes,
-                mime_type="application/pdf",
-            ),
-            "Extract all the questions from the PDF and write down each question separated by newline, just give the questions do not write anything else other than that"
-        ]
-    )
+    with st.spinner('Extracting Questions . . .',show_time = False)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents = [
+                types.Part.from_bytes(
+                    data = file_bytes,
+                    mime_type="application/pdf",
+                ),
+                "Extract all the questions from the PDF and write down each question separated by newline, just give the questions do not write anything else other than that"
+            ]
+        )
     
     questions = response.text.split('\n')
     output_area = st.empty()  # Placeholder for updating the markdown
     print(questions.__len__())
     answer = ''
-    with st.spinner('Generating answers . . .'):
+    with st.spinner('Generating answers ✍️ . . .', show_time = False):
         for num, question in enumerate(questions):
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
