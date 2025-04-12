@@ -2,7 +2,9 @@ import streamlit as st
 from google import genai
 from google.genai import types
 import time
-
+from io import BytesIO
+from markdown_pdf import MarkdownPdf
+from markdown_pdf import Section
 # Page config
 st.set_page_config(page_title="Answer Flow", page_icon="💡", layout="wide")
 
@@ -91,9 +93,14 @@ if uploaded_file is not None:
             time.sleep(2)
 
     st.markdown("### 📥 Download the complete answer set:")
+    pdf = MarkdownPdf(toc_level=1)
+    pdf.add_section(Section(answer, toc=0))
+    buffer = BytesIO()
+    pdf.save(buffer)
+    buffer.seek(0)
     st.download_button(
         label="📄 Download Markdown File",
-        data=answer,
+        data=buffer,
         file_name="answers.md",
         mime="text/markdown"
     )
