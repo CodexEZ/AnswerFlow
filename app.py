@@ -179,7 +179,7 @@ if uploaded_file is not None:
     st.download_button(
         label="📄 Download Markdown File",
         data=buffer,
-        file_name="answers.md",
+        file_name="answers.pdf",
         mime="text/markdown"
     )
     uploaded_file = None
